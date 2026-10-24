@@ -2,7 +2,7 @@
  * gatecord-fill.js
  * -----------------
  * Reads data from the gatecord iframe and populates four textboxes
- * on the parent page (index (3).html).
+ * on the parent page (index.html).
  *
  * How it works:
  * 1. Waits ~2 s for the iframe to finish loading.
