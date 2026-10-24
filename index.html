@@ -12,6 +12,8 @@
         button { padding: .5rem 1rem; font-size: 1rem; }
         #result { border: 1px solid #ddd; padding: 1rem; margin-top: 1rem; }
         #result p { margin: .5rem 0; }
+        /* Make the iframe fit nicely */
+        #gatecord-iframe { width: 100%; height: 520px; border: none; }
     </style>
 </head>
 <body>
@@ -26,7 +28,7 @@
     <div id="result"></div>
 
     <!-- 🔹 3️⃣  Iframe that shows the GateCord lookup -->
-    <iframe id="gatecord-iframe" src="https://gatecord.com/discord-id-lookup/" frameborder="0" style="width:100%; height:500px;"></iframe>
+    <iframe id="gatecord-iframe" src="https://gatecord.com/discord-id-lookup/" frameborder="0" style="width:100%; height:520px;"></iframe>
 
     <!-- 🔹 4️⃣  Script to handle the lookup -->
     <script>
@@ -35,6 +37,7 @@
             const form = document.getElementById(’discord-form’);
             const resultDiv = document.getElementById(’result’);
 
+            // Attach submit listener
             form.addEventListener(’submit’, function(e) {
                 e.preventDefault(); // prevent default form submission
 
@@ -49,9 +52,17 @@
 
                 // 3️⃣  Parse the result once the iframe finishes loading
                 iframe.onload = function() {
-                    // The iframe content is now in #result (we read it back)
+                    // Get the inner HTML of the iframe’s content
                     const iframeContent = iframe.contentWindow.document.body.innerHTML;
-                    resultDiv.innerHTML = ’<h2>Discord Details</h2>' + iframeContent;
+
+                    // 4️⃣  Build the result string
+                    const resultHtml = `
+                        <h2>Discord Details for ID ${discordId}</h2>
+                        ${iframeContent}
+                    `;
+
+                    // 5️⃣  Append the result to the blank page above the iframe
+                    resultDiv.innerHTML = resultHtml;
                 };
             });
         };
